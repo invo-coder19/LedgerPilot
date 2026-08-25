@@ -1,0 +1,145 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base ────────────────────────────────────────────────────────────────── */
+@layer base {
+  :root {
+    --sidebar-width: 240px;
+  }
+
+  * {
+    @apply border-surface-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-surface text-slate-100 font-sans antialiased;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-surface;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-surface-border rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-500;
+  }
+}
+
+/* ── Components ──────────────────────────────────────────────────────────── */
+@layer components {
+  /* Card */
+  .card {
+    @apply bg-surface-card border border-surface-border rounded-xl shadow-card;
+  }
+
+  /* Button variants */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-brand-500 hover:bg-brand-600
+           text-white font-medium text-sm transition-colors duration-150 focus:outline-none
+           focus:ring-2 focus:ring-brand-400 focus:ring-offset-2 focus:ring-offset-surface
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-hover hover:bg-slate-700
+           text-slate-200 font-medium text-sm border border-surface-border transition-colors duration-150
+           focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2
+           focus:ring-offset-surface disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700
+           text-white font-medium text-sm transition-colors duration-150 focus:outline-none
+           focus:ring-2 focus:ring-red-400 focus:ring-offset-2 focus:ring-offset-surface
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  /* Input */
+  .input {
+    @apply w-full px-3 py-2 rounded-lg bg-surface border border-surface-border text-slate-100
+           placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500
+           focus:border-transparent transition-colors duration-150;
+  }
+
+  /* Label */
+  .label {
+    @apply block text-xs font-medium text-slate-400 mb-1 uppercase tracking-wide;
+  }
+
+  /* Table */
+  .table-wrapper {
+    @apply overflow-x-auto rounded-xl border border-surface-border;
+  }
+
+  .data-table {
+    @apply w-full text-sm;
+  }
+
+  .data-table thead tr {
+    @apply bg-surface border-b border-surface-border;
+  }
+
+  .data-table th {
+    @apply px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider whitespace-nowrap;
+  }
+
+  .data-table tbody tr {
+    @apply border-b border-surface-border hover:bg-surface-hover transition-colors duration-100 cursor-pointer;
+  }
+
+  .data-table tbody tr:last-child {
+    @apply border-b-0;
+  }
+
+  .data-table td {
+    @apply px-4 py-3 text-slate-200 whitespace-nowrap;
+  }
+
+  /* Sidebar nav item */
+  .nav-item {
+    @apply flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 text-sm font-medium
+           transition-all duration-150 hover:bg-surface-hover hover:text-slate-100;
+  }
+
+  .nav-item.active {
+    @apply bg-brand-500/10 text-brand-400 border-l-2 border-brand-500;
+  }
+
+  /* Badge */
+  .badge {
+    @apply inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium;
+  }
+}
+
+/* ── Utilities ───────────────────────────────────────────────────────────── */
+@layer utilities {
+  .text-money {
+    @apply font-mono text-slate-100 tabular-nums;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.2s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .skeleton {
+    @apply bg-surface-border rounded animate-pulse;
+  }
+}
