@@ -4,7 +4,11 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import get_settings
-from app.api.routes import auth, dashboard, transactions, invoices, settlements, bank_transactions, exceptions, audit_logs
+from app.api.routes import (
+    auth, dashboard, transactions, invoices, settlements,
+    bank_transactions, exceptions, audit_logs, intelligence,
+    investigations, copilot,
+)
 
 settings = get_settings()
 
@@ -13,8 +17,9 @@ app = FastAPI(
     description=(
         "LedgerPilot — AI Finance Controller. "
         "Phase 1: Foundation & Finance Dashboard. "
-        "Provides authentication, RBAC, transaction/invoice/settlement/exception management, "
-        "and audit logging. AI reconciliation features will be introduced in Phase 2+."
+        "Phase 2: Reconciliation Engine. "
+        "Phase 3A: ML Intelligence & RAG Evidence. "
+        "Phase 3B: AI Finance Investigator (LangGraph)."
     ),
     version=settings.APP_VERSION,
     docs_url="/docs",
@@ -41,6 +46,9 @@ app.include_router(settlements.router, prefix=API_PREFIX)
 app.include_router(bank_transactions.router, prefix=API_PREFIX)
 app.include_router(exceptions.router, prefix=API_PREFIX)
 app.include_router(audit_logs.router, prefix=API_PREFIX)
+app.include_router(intelligence.router, prefix=API_PREFIX)
+app.include_router(investigations.router, prefix=API_PREFIX)
+app.include_router(copilot.router, prefix=API_PREFIX)
 
 
 @app.get("/health", tags=["Health"])

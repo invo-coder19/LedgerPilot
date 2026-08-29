@@ -16,6 +16,7 @@ import ExceptionDetailPage from './pages/ExceptionDetailPage'
 import AuditLogPage from './pages/AuditLogPage'
 import SettingsPage from './pages/SettingsPage'
 import ReconciliationPage from './pages/ReconciliationPage'
+import FinanceCopilot from './components/FinanceCopilot'
 
 const App: React.FC = () => (
   <BrowserRouter>
@@ -28,8 +29,11 @@ const App: React.FC = () => (
         <Route
           element={
             <ProtectedRoute>
+            <>
               <AppLayout />
-            </ProtectedRoute>
+              <FinanceCopilot />
+            </>
+          </ProtectedRoute>
           }
         >
           <Route index element={<Navigate to="/dashboard" replace />} />

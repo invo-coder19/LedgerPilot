@@ -4,6 +4,8 @@ import StatusBadge from '../components/StatusBadge'
 import SeverityBadge from '../components/SeverityBadge'
 import ErrorState from '../components/ErrorState'
 import RoleGuard from '../auth/RoleGuard'
+import MachineIntelligencePanel from '../components/MachineIntelligencePanel'
+import AIInvestigatorPanel from '../components/AIInvestigatorPanel'
 import { exceptionService } from '../services/exceptionService'
 import type { FinancialException, ExceptionStatus } from '../types'
 import { formatCurrency, formatDateTime, getErrorMessage } from '../utils/format'
@@ -141,20 +143,14 @@ const ExceptionDetailPage: React.FC = () => {
           </div>
         </RoleGuard>
 
-        {/* AI Investigation Placeholder */}
-        <div className="border border-dashed border-surface-border rounded-xl p-5 bg-surface/50">
-          <div className="flex items-center gap-2 mb-2">
-            <svg className="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
-                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
-            <h3 className="text-sm font-medium text-slate-400">AI Investigation</h3>
-            <span className="badge bg-slate-500/10 text-slate-500 border border-slate-500/20">Available in Phase 3</span>
-          </div>
-          <p className="text-xs text-slate-600">
-            Automated root cause analysis, suggested remediation, and confidence scoring will be available
-            once the Intelligence Layer (Phase 3) is deployed.
-          </p>
+        {/* Machine Intelligence Panel — Phase 3A */}
+        <div className="border border-violet-500/20 rounded-xl p-5 bg-violet-500/5">
+          <MachineIntelligencePanel exceptionId={exc.id} />
+        </div>
+
+        {/* AI Finance Investigator — Phase 3B */}
+        <div className="border border-violet-500/30 rounded-xl p-5 bg-gradient-to-br from-violet-950/30 to-indigo-950/30">
+          <AIInvestigatorPanel exceptionId={exc.id} />
         </div>
       </div>
     </div>

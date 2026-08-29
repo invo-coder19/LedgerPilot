@@ -29,6 +29,12 @@ from app.models.settlement import Settlement, SettlementStatus
 from app.models.transaction import Transaction, TransactionStatus
 from app.models.user import Role, User
 
+try:
+    from app.rag.ingestion import ingest_finance_rules, ingest_historical_cases
+    _RAG_AVAILABLE = True
+except ImportError:
+    _RAG_AVAILABLE = False
+
 fake = Faker("en_IN")
 SEED = 42
 Faker.seed(SEED)
@@ -365,6 +371,24 @@ def main() -> None:
 
         print("\n→ Audit Logs")
         seed_audit_logs(db, users, merchant)
+
+        # ── Phase 3A: Evidence ingestion ──────────────────────────────────────
+        if _RAG_AVAILABLE:
+            try:
+                print("\n→ Evidence: Finance Rules")
+                rules = ingest_finance_rules(db)
+                print(f"  [+] {len(rules)} finance rules ingested")
+
+                print("\n→ Evidence: Historical Cases")
+                cases = ingest_historical_cases(db)
+                print(f"  [+] {len(cases)} historical cases ingested")
+            except Exception as rag_err:
+                print(
+                    f"  [!] Evidence ingestion failed (pgvector may not be available): {rag_err}"
+                )
+                print("  [!] Run migrations first: alembic upgrade head")
+        else:
+            print("\n→ Evidence: [skipped — RAG dependencies not installed]")
 
         print("\n✅ Seed complete!\n")
         print("Demo credentials:")
