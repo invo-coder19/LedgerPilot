@@ -10,6 +10,9 @@ from app.core.security import hash_password
 from app.main import app
 from app.models.user import Role, User
 
+# ── Import all models so SQLite creates the right tables ─────────────────────
+import app.models  # noqa: F401 — registers all models on Base.metadata
+
 # ── In-memory SQLite for tests (overrides PostgreSQL) ────────────────────────
 SQLALCHEMY_TEST_DATABASE_URL = "sqlite:///:memory:"
 
@@ -61,7 +64,7 @@ def _create_user(db, email: str, password: str, role: Role) -> User:
         user = User(
             email=email,
             password_hash=hash_password(password),
-            full_name=f"Test {role}",
+            full_name=f"Test {role.value}",
             role=role,
             is_active=True,
         )
@@ -80,6 +83,22 @@ def admin_user(db=None):
 
 
 @pytest.fixture(scope="session")
+def manager_user(db=None):
+    session = TestingSessionLocal()
+    user = _create_user(session, "manager@test.dev", "Manager@123", Role.FINANCE_MANAGER)
+    session.close()
+    return user
+
+
+@pytest.fixture(scope="session")
+def analyst_user(db=None):
+    session = TestingSessionLocal()
+    user = _create_user(session, "analyst@test.dev", "Analyst@123", Role.FINANCE_ANALYST)
+    session.close()
+    return user
+
+
+@pytest.fixture(scope="session")
 def viewer_user(db=None):
     session = TestingSessionLocal()
     user = _create_user(session, "viewer@test.dev", "Viewer@123", Role.VIEWER)
@@ -89,4 +108,10 @@ def viewer_user(db=None):
 
 def _get_token(client, email: str, password: str) -> str:
     resp = client.post("/api/v1/auth/login", json={"email": email, "password": password})
+    assert resp.status_code == 200, f"Login failed for {email}: {resp.text}"
     return resp.json()["access_token"]
+
+
+def _auth_headers(client, email: str, password: str) -> dict:
+    token = _get_token(client, email, password)
+    return {"Authorization": f"Bearer {token}"}

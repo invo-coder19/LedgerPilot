@@ -18,9 +18,9 @@ from decimal import Decimal
 
 from sqlalchemy import (
     Boolean, DateTime, Enum, Float, Index, Integer, Numeric,
-    String, Text, ForeignKey, UniqueConstraint,
+    String, Text, ForeignKey, UniqueConstraint, JSON,
 )
-from sqlalchemy.dialects.postgresql import JSONB, UUID
+from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.database import Base
@@ -200,7 +200,7 @@ class ControllerDecision(Base):
         Enum(RiskBand), nullable=False, default=RiskBand.CRITICAL,
     )
     reason: Mapped[str] = mapped_column(Text, nullable=False, default="")
-    evidence_ids: Mapped[list | None] = mapped_column(JSONB, nullable=True)
+    evidence_ids: Mapped[list | None] = mapped_column(JSON, nullable=True)
     policy_version: Mapped[str | None] = mapped_column(String(64), nullable=True)
     requires_approval: Mapped[bool] = mapped_column(
         Boolean, nullable=False, default=True,
@@ -211,7 +211,7 @@ class ControllerDecision(Base):
         default=ControllerDecisionStatus.PENDING,
         index=True,
     )
-    risk_details: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
+    risk_details: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     dry_run: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
@@ -314,7 +314,7 @@ class ControllerPolicy(Base):
     name: Mapped[str] = mapped_column(String(255), nullable=False)
     description: Mapped[str] = mapped_column(Text, nullable=False, default="")
     # JSON configuration: thresholds, exception_types, allowed_actions, etc.
-    configuration: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    configuration: Mapped[dict] = mapped_column(JSON, nullable=False)
     status: Mapped[PolicyStatus] = mapped_column(
         Enum(PolicyStatus),
         nullable=False,
@@ -376,7 +376,7 @@ class ActionResult(Base):
         String(128), nullable=False, default="system",
     )
     verified: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
-    verification_details: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
+    verification_details: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     error_message: Mapped[str | None] = mapped_column(Text, nullable=True)
     is_reversible: Mapped[bool] = mapped_column(
         Boolean, nullable=False, default=False,
@@ -413,7 +413,7 @@ class ControllerConfig(Base):
     __tablename__ = "controller_config"
 
     key: Mapped[str] = mapped_column(String(128), primary_key=True)
-    value: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    value: Mapped[dict] = mapped_column(JSON, nullable=False)
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,

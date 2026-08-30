@@ -22,6 +22,10 @@ from app.models.controller import (
     ActionResult, ActionStatus,
     ControllerConfig, RiskBand,
 )
+# Phase 5
+from app.models.evaluation import (
+    EvaluationDataset, EvaluationRun, EvaluationResult, EvaluationStatus,
+)
 
 __all__ = [
     "User", "Role",
@@ -42,4 +46,6 @@ __all__ = [
     "ControllerPolicy", "PolicyStatus",
     "ActionResult", "ActionStatus",
     "ControllerConfig", "RiskBand",
+    # Phase 5
+    "EvaluationDataset", "EvaluationRun", "EvaluationResult", "EvaluationStatus",
 ]

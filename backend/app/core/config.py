@@ -66,6 +66,14 @@ class Settings(BaseSettings):
     CONTROLLER_MAX_CONCURRENT: int = 10
     CONTROLLER_DRY_RUN: bool = False
 
+    # ── Phase 5: Observability & Hardening ────────────────────────────────────
+    ENVIRONMENT: str = "development"   # development | test | production
+    DEMO_MODE: bool = True
+    MAX_UPLOAD_SIZE_MB: int = 10
+    MAX_CSV_ROWS: int = 10000
+    ENABLE_DOCS: bool = True
+    LOG_LEVEL: str = "INFO"
+
     @property
     def models_path(self) -> Path:
         """Absolute path to the models directory."""
