@@ -57,6 +57,15 @@ class Settings(BaseSettings):
     AI_CONFIDENCE_HIGH: float = 0.90
     AI_CONFIDENCE_MEDIUM: float = 0.70
 
+    # ── Phase 4: Controller ───────────────────────────────────────────────────
+    REDIS_URL: str = "redis://localhost:6379/0"
+    CELERY_BROKER_URL: str = ""
+    CONTROLLER_MAX_AUTO_AMOUNT: float = 10000.0
+    CONTROLLER_MAX_AUTO_PER_RUN: int = 500
+    CONTROLLER_MAX_AUTO_PER_HOUR: int = 1000
+    CONTROLLER_MAX_CONCURRENT: int = 10
+    CONTROLLER_DRY_RUN: bool = False
+
     @property
     def models_path(self) -> Path:
         """Absolute path to the models directory."""

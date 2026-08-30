@@ -8,6 +8,8 @@ from app.api.routes import (
     auth, dashboard, transactions, invoices, settlements,
     bank_transactions, exceptions, audit_logs, intelligence,
     investigations, copilot,
+    # Phase 4
+    controller, approvals, policies, actions, controller_config,
 )
 
 settings = get_settings()
@@ -19,7 +21,8 @@ app = FastAPI(
         "Phase 1: Foundation & Finance Dashboard. "
         "Phase 2: Reconciliation Engine. "
         "Phase 3A: ML Intelligence & RAG Evidence. "
-        "Phase 3B: AI Finance Investigator (LangGraph)."
+        "Phase 3B: AI Finance Investigator (LangGraph). "
+        "Phase 4: Autonomous Finance Controller."
     ),
     version=settings.APP_VERSION,
     docs_url="/docs",
@@ -49,6 +52,12 @@ app.include_router(audit_logs.router, prefix=API_PREFIX)
 app.include_router(intelligence.router, prefix=API_PREFIX)
 app.include_router(investigations.router, prefix=API_PREFIX)
 app.include_router(copilot.router, prefix=API_PREFIX)
+# Phase 4
+app.include_router(controller.router, prefix=API_PREFIX)
+app.include_router(approvals.router, prefix=API_PREFIX)
+app.include_router(policies.router, prefix=API_PREFIX)
+app.include_router(actions.router, prefix=API_PREFIX)
+app.include_router(controller_config.router, prefix=API_PREFIX)
 
 
 @app.get("/health", tags=["Health"])

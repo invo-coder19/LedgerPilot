@@ -13,6 +13,15 @@ from app.models.ml_prediction import MLPrediction, ModelType
 from app.models.evidence_document import EvidenceDocument, EvidenceSourceType, EvidenceTrustLevel
 # Phase 3B
 from app.models.investigation import AIInvestigationRun, AIInvestigationStep, InvestigationStatus
+# Phase 4
+from app.models.controller import (
+    ControllerRun, ControllerRunStatus,
+    ControllerDecision, ControllerDecisionType, ControllerDecisionStatus,
+    ApprovalRequest, ApprovalStatus,
+    ControllerPolicy, PolicyStatus,
+    ActionResult, ActionStatus,
+    ControllerConfig, RiskBand,
+)
 
 __all__ = [
     "User", "Role",
@@ -26,4 +35,11 @@ __all__ = [
     "MLPrediction", "ModelType",
     "EvidenceDocument", "EvidenceSourceType", "EvidenceTrustLevel",
     "AIInvestigationRun", "AIInvestigationStep", "InvestigationStatus",
+    # Phase 4
+    "ControllerRun", "ControllerRunStatus",
+    "ControllerDecision", "ControllerDecisionType", "ControllerDecisionStatus",
+    "ApprovalRequest", "ApprovalStatus",
+    "ControllerPolicy", "PolicyStatus",
+    "ActionResult", "ActionStatus",
+    "ControllerConfig", "RiskBand",
 ]
