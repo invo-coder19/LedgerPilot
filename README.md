@@ -1,6 +1,5 @@
 # 🚀 LedgerPilot — Autonomous AI Finance Controller
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Python: 3.11+](https://img.shields.io/badge/Python-3.11+-3776AB.svg?logo=python&logoColor=white)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688.svg?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![React](https://img.shields.io/badge/React-18+-61DAFB.svg?logo=react&logoColor=black)](https://react.dev)
@@ -84,47 +83,6 @@ Modern high-volume fintechs and merchant payment ecosystems process millions of 
 
 ---
 
-## 💎 Key Features Across All 5 Phases
-
-### 🔹 Phase 1: Foundation, Ledger & Multi-Entity RBAC
-* **Double-Entry Compatible Schemas:** Complete data models for Merchants, Transactions, Invoices, Settlements, Bank Ledger Entries, and Exceptions.
-* **Role-Based Access Control (RBAC):** Tiered roles (`ADMIN`, `FINANCE_MANAGER`, `FINANCE_ANALYST`, `VIEWER`) enforced via cryptographic JWT bearer tokens.
-* **Enterprise Dashboard:** Real-time KPI summaries, ledger mismatch volume, settlement drift monitoring, and discrepancy aggregations.
-
-### 🔹 Phase 2: High-Performance Multi-Way Reconciliation
-* **Multi-Source Matching Engine:** Matches Order Ledgers $\leftrightarrow$ Gateway Payments $\leftrightarrow$ Settlement Batches $\leftrightarrow$ Bank Statements.
-* **Smart Discrepancy Classification:** Automatically isolates Fee Variances, Amount Mismatches, Missing Invoices, Missing Settlements, Duplicate Debits, and Timing Lags.
-* **Batch Reconciliation Processor:** High-throughput streaming match pipelines capable of processing tens of thousands of records in seconds.
-
-### 🔹 Phase 3A: Machine Learning Intelligence & Hybrid RAG
-* **Ensemble ML Classification:** Supervised multi-class classifiers (XGBoost / LightGBM / Random Forest) trained on historical dispute patterns.
-* **Unsupervised Anomaly Detector:** Isolation Forest / One-Class statistical outlier model flags suspicious transaction spikes and fee anomalies.
-* **Hybrid RAG Evidence Retriever:** `sentence-transformers/all-MiniLM-L6-v2` embeddings stored with `pgvector` indexing merchant contracts, fee schedules, SLA policies, and dispute documentation.
-
-### 🔹 Phase 3B: AI Finance Investigator (LangGraph)
-* **Agentic Investigation Workflow:** LangGraph cyclical state machine conducting hypothesis testing, evidence retrieval, and structured reason extraction.
-* **Deterministic Confidence Policy:** Prevents LLM confidence hallucination by calculating confidence score through a hardcoded weighted formula:
-  $$\text{Score} = 0.30(\text{Evidence}) + 0.20(\text{ML Support}) + 0.20(\text{Anomaly Signal}) + 0.15(\text{Rule Match}) + 0.10(\text{History}) + 0.05(\text{LLM})$$
-* **Strict Anti-Hallucination Guardrails:** Validates all cited evidence IDs against live database records and merchant isolation boundaries before presenting conclusions.
-
-### 🔹 Phase 4: Autonomous Finance Controller
-* **Risk Engine & Policy Enforcement:** Evaluates transaction exposure, merchant risk profile, and automated limits.
-* **Bounded Autonomous Actions:** Supported execution modes:
-  * `AUTO_EXECUTE`: Low-risk, high-confidence fee adjustments and automated reconciliations within strict limits.
-  * `RECOMMEND`: Medium-confidence findings routed to Finance Analysts with pre-drafted adjustments.
-  * `ESCALATE`: High-exposure or contradictory findings routed to Finance Managers for dual-key authorization.
-  * `BLOCK`: Anomalous or contract-violating exceptions halted immediately.
-* **Idempotent Action Execution:** Zero duplicate mutations via database locks (`SELECT FOR UPDATE`) and unique cryptographic idempotency keys.
-* **Instant Emergency Kill-Switch:** Global and per-merchant circuit breaker instantly suspending autonomous resolution during upstream outages.
-
-### 🔹 Phase 5: Evaluation, Failure Simulation & Production Hardening
-* **Ground-Truth Benchmark Dataset Generator:** Configurable benchmark dataset generator producing 1,000–5,000 controlled cases with deterministic random seeds across 9 scenario distributions.
-* **Full E2E Quality & Financial Impact Metrics:** Computes exact match accuracy, ML F1 scores, citation correctness, autonomous error rates, and false-positive financial cost.
-* **Failure Simulation Engine:** 9 fault injection scenarios (missing bank evidence, contradictory amounts, LLM outages, ML artifact corruption, mid-action DB crashes, duplicate task retries, kill-switch activation, and invalid policies).
-* **Production Hardening:** Request ID tracing (`X-Request-ID`), structured JSON logging, security response headers (`nosniff`, `DENY`), sanitized error masking, and deep component health probes (`/health/live`, `/health/ready`, `/health/detailed`).
-
----
-
 ## 🛡️ Safety & Governance: Why LedgerPilot Can Be Trusted
 
 | Governance Pillar | Implementation in LedgerPilot |
@@ -183,11 +141,11 @@ Test system resilience against unpredictable production conditions:
 
 * **Backend:** Python 3.11+, FastAPI, SQLAlchemy 2.0, Alembic, Pydantic v2
 * **Database & Vector Store:** PostgreSQL 16+, `pgvector`
-* **Caching & Asynchronous Processing:** Redis, Celery
+* **Caching & Asynchronous Processing:** Redis
 * **Machine Learning:** Scikit-Learn, XGBoost, Pandas, NumPy, Joblib
-* **AI & Agent Workflow:** LangGraph, LangChain, Google Gemini / OpenAI GPT-4o
+* **AI & Agent Workflow:** LangGraph, LangChain, Google Gemini
 * **Frontend:** React 18, TypeScript, Vite, Tailwind CSS, Heroicons, Recharts
-* **Observability & Testing:** Structlog, Pytest, Pytest-Asyncio, HTTPX
+* **Observability & Testing:** Structlog, Pytest, HTTPX
 
 ---
 
@@ -207,7 +165,7 @@ cd LedgerPilot
 # 2. Copy environment configuration
 cp .env.example .env
 
-# 3. Start all services (Backend, Frontend, PostgreSQL, Redis, Celery)
+# 3. Start all services (Backend, Frontend, PostgreSQL, Redis)
 docker compose up -d --build
 
 # 4. Apply database migrations
