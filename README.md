@@ -288,8 +288,4 @@ Access these via the API or Frontend Settings:
 
 ---
 
-## 📄 License & Disclaimer
 
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
-
-> ⚠️ **DISCLAIMER:** *LedgerPilot is built with synthetic financial data for demonstration, benchmarking, and challenge evaluation purposes. It does not move real funds.*
